@@ -19,7 +19,7 @@ const playRound = (playerSelection, computerSelection) => {
     playerSelection = playerSelection.toLowerCase();
     computerSelection = computerSelection.toLowerCase();
     if (playerSelection === 'rock' && computerSelection === 'paper') {
-        return 'You lose! His paper beats your rock';;
+        return 2; //'You lose! His paper beats your rock';;
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
         return 1; //'You win! Your rock beats his scissors';
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
@@ -38,7 +38,7 @@ const playRound = (playerSelection, computerSelection) => {
 const game = () => {
     let gameScores = {
         playerScore: 0,
-        computerScore: 0
+        computerScore: 0,
     };
 
     const printCurrentScore = () => {
