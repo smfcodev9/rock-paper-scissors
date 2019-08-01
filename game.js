@@ -28,6 +28,7 @@ const currentRound = document.querySelector('.round-number');
 const scores = document.querySelector('.scores');
 const finalResult = document.querySelector('.final-result');
 const roundInfo = document.querySelector('.round-info');
+const resetButton = document.querySelector('.reset-button');
 
 const printCurrentRound = () => {
     currentRound.classList.remove('hidden');
@@ -49,6 +50,10 @@ const printFinalResult =  () => {
     finalResult.textContent = `${winner} Wins!`;
 }
 
+const showResetButton = () => {
+    resetButton.classList.remove('hidden');
+}
+
 const resetGame = () => {
     roundNumber = 0;
     gameScores.computerScore = 0;
@@ -58,6 +63,7 @@ const resetGame = () => {
     roundInfo.classList.add('hidden');
     scores.classList.add('hidden');
     finalResult.classList.add('hidden');
+    resetButton.classList.add('hidden');
 }
 
 const playRound = (playerSelection) => {
@@ -89,6 +95,7 @@ const playRound = (playerSelection) => {
 
 const startRound = (event) => {
     roundNumber += 1;
+    showResetButton();
     if (winner !== '') {
         resetGame();
         return;
@@ -125,6 +132,8 @@ const buttons = document.querySelectorAll('.select-hand');
 buttons.forEach( button => {
     button.addEventListener('click', startRound);
 });
+
+resetButton.addEventListener('click', resetGame);
 
 
 // const resultsContainer = document.querySelector('.results-container');
