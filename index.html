@@ -5,16 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>Simple Rock Paper Scissors Game</h1>
+    <p>First to 5 points win!</p>
+    <p>Select any option to play:</p>
     <div class="select-hand-container">
-        <p>Select any option to play!</p>
-        <button class="select-hand" id="rock'">Rock</button>
+        <button class="select-hand" id="rock">Rock</button>
         <button class="select-hand" id="paper">Paper</button>
         <button class="select-hand" id="scissors">Scissors</button>
     </div>
     <div class="results-container">
-        <h1>Results:</h1>
+        <h2>Results:</h2>
+        <h3 class="round-number hidden">No results to display</h3>
+        <p class="round-info hidden">No info</p>
+        <p class="scores hidden">No results to display</p>
+        <h3 class="final-result hidden">No results to display</h3>
     </div>
 </body>
 <script type="text/javascript" src="game.js"></script>

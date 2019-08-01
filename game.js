@@ -3,82 +3,129 @@ const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 const computerPlay = () => {
     let computerHandValue = getRandomInt(3);
     if (computerHandValue === 0) {
-        return 'Rock';
+        return 'rock';
     } else if (computerHandValue === 1) {
-        return 'Paper';
+        return 'paper';
     } else if (computerHandValue === 2) {
-        return 'Scissors';
+        return 'scissors';
     } else {
         return 'computerPlay Error';
     };
 };
 
+let roundNumber = 0;
+
+let roundInfoMessage = '';
+
+let gameScores = {
+    playerScore: 0,
+    computerScore: 0
+};
+
+let winner = '';
+
+const currentRound = document.querySelector('.round-number');
+const scores = document.querySelector('.scores');
+const finalResult = document.querySelector('.final-result');
+const roundInfo = document.querySelector('.round-info');
+
+const printCurrentRound = () => {
+    currentRound.classList.remove('hidden');
+    currentRound.textContent = `Round ${roundNumber}`;
+}
+
+const printRoundInfo = () => {
+    roundInfo.classList.remove('hidden');
+    roundInfo.textContent = roundInfoMessage;
+}
+
+const printScores = () => {
+    scores.classList.remove('hidden');
+    scores.textContent = `You ${gameScores.playerScore} : ${gameScores.computerScore} CPU`;
+}
+
+const printFinalResult =  () => {
+    finalResult.classList.remove('hidden');
+    finalResult.textContent = `${winner} Wins!`;
+}
+
+const resetGame = () => {
+    roundNumber = 0;
+    gameScores.computerScore = 0;
+    gameScores.playerScore = 0;
+    winner = '';
+    currentRound.classList.add('hidden');
+    roundInfo.classList.add('hidden');
+    scores.classList.add('hidden');
+    finalResult.classList.add('hidden');
+}
+
 const playRound = (playerSelection) => {
-    playerSelection = playerSelection.toLowerCase();
-    computerSelection = computerPlay().toLowerCase();
+    // playerSelection = playerHand;
+    computerSelection = computerPlay();
     if (playerSelection === 'rock' && computerSelection === 'paper') {
-        return 2; //'You lose! His paper beats your rock';;
+        roundInfoMessage = 'You lose! His paper beats your rock';
+        return 2;
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-        return 1; //'You win! Your rock beats his scissors';
+        roundInfoMessage = 'You win! Your rock beats his scissors';
+        return 1;
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-        return 1; //'You win! Your paper beats his rock';
+        roundInfoMessage = 'You win! Your paper beats his rock';
+        return 1;
     } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
-        return 2; //'You lose! His scissors beats your paper';
+        roundInfoMessage = 'You lose! His scissors beats your paper';
+        return 2;
     } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
-        return 2; //'You lose! His rock beats your scissors';
+        roundInfoMessage = 'You lose! His rock beats your scissors';
+        return 2;
     } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        return 1; //'You win! Your scissors beats his paper';
+        roundInfoMessage = 'You win! Your scissors beats his paper';
+        return 1;
     } else {
-        return 0; //'Draw!';
+        roundInfoMessage = 'Draw!';
+        return 0;
     }
 }
 
-const game = () => {
-    let gameScores = {
-        playerScore: 0,
-        computerScore: 0,
-    };
-
-    const printCurrentScore = () => {
-        console.log(`Current score is ${gameScores.playerScore} : ${gameScores.computerScore}.`);
-    };
-
-    const printFinalScore = () => {
-        console.log(`Final score is ${gameScores.playerScore} : ${gameScores.computerScore},`);
-    };
-
-    for (let roundNumber = 1; roundNumber <= 5; roundNumber += 1) {
-        let playerHand = prompt(`[ROUND ${roundNumber}]
-        Type Rock, Paper or Scissors to choose your hand!`);
-        let roundResult = playRound(playerHand, computerHand);
-
-        if (roundResult === 1) {
-            gameScores.playerScore += 1;
-            console.log('You win this round!');
-            printCurrentScore();
-        } else if (roundResult === 2) {
-            gameScores.computerScore += 1;
-            console.log('You lose this round...');
-            printCurrentScore();
-        } else {
-            console.log('Draw!');
-            printCurrentScore();
-        };
-    };
-    
-    if (gameScores.playerScore > gameScores.computerScore) {
-        printFinalScore();
-        console.log('You have won the game!');
-    } else if (gameScores.playerScore < gameScores.computerScore) {
-        printFinalScore();
-        console.log('You have lost the game...');
+const startRound = (event) => {
+    roundNumber += 1;
+    if (winner !== '') {
+        resetGame();
+        return;
+    }
+    let roundResult = playRound(event.target.id);
+    if (roundResult === 1) {
+        gameScores.playerScore += 1;
+        printCurrentRound();
+        printRoundInfo();
+        printScores();
+    } else if (roundResult === 2) {
+        gameScores.computerScore += 1;
+        printCurrentRound();
+        printRoundInfo();
+        printScores();
     } else {
-        printFinalScore();
-        console.log(`It's a tie!`);
+        printCurrentRound();
+        printRoundInfo();
+        printScores();
+    };
+    if (gameScores.playerScore == 5 && gameScores.computerScore < 5) {
+        winner = "Player";
+        printFinalResult();
+    } else if (gameScores.computerScore == 5 && gameScores.playerScore < 5) {
+        winner = "CPU";
+        printFinalResult();
+    } else if (gameScores.computerScore == 5 && gameScores.playerScore == 5) {
+        winner = "Nobody"
+        printFinalResult();
     }
 };
 
 const buttons = document.querySelectorAll('.select-hand');
 buttons.forEach( button => {
-    button.addEventListener('click', playRound())
-})
+    button.addEventListener('click', startRound);
+});
+
+
+// const resultsContainer = document.querySelector('.results-container');
+// resultsContainer.appendChild(printCurrentRound);
