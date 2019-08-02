@@ -1,18 +1,3 @@
-const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
-
-const computerPlay = () => {
-    let computerHandValue = getRandomInt(3);
-    if (computerHandValue === 0) {
-        return 'rock';
-    } else if (computerHandValue === 1) {
-        return 'paper';
-    } else if (computerHandValue === 2) {
-        return 'scissors';
-    } else {
-        return 'computerPlay Error';
-    };
-};
-
 let roundNumber = 0;
 
 let roundInfoMessage = '';
@@ -66,8 +51,22 @@ const resetGame = () => {
     resetButton.classList.add('hidden');
 }
 
+const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
+
+const computerPlay = () => {
+    let computerHandValue = getRandomInt(3);
+    if (computerHandValue === 0) {
+        return 'rock';
+    } else if (computerHandValue === 1) {
+        return 'paper';
+    } else if (computerHandValue === 2) {
+        return 'scissors';
+    } else {
+        return 'computerPlay Error';
+    };
+};
+
 const playRound = (playerSelection) => {
-    // playerSelection = playerHand;
     computerSelection = computerPlay();
     if (playerSelection === 'rock' && computerSelection === 'paper') {
         roundInfoMessage = 'You lose! His paper beats your rock';
@@ -134,7 +133,3 @@ buttons.forEach( button => {
 });
 
 resetButton.addEventListener('click', resetGame);
-
-
-// const resultsContainer = document.querySelector('.results-container');
-// resultsContainer.appendChild(printCurrentRound);
